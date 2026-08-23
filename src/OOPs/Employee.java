@@ -6,12 +6,19 @@ public class Employee {
     private String name;
     private float salary;
     private String department;
+    static int population;
 
     Employee (int id, String name, float salary, String department) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.department = department;
+        Employee.population+= 1;
+    }
+
+    static void message() {
+        System.out.println("Hello");
+        System.out.println(Employee.population);
     }
 
     public int getId() {

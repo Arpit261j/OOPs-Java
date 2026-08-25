@@ -1,4 +1,4 @@
-package OOPs;
+package OOPs.Examples;
 
 public class Employee {
     //id, name, salary, department

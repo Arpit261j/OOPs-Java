@@ -8,6 +8,6 @@ public class Main extends A{
 
     public static void main(String[] args) {
         A a = new Main(2,"Arpit");
-        
+
     }
 }

@@ -1,6 +1,9 @@
 package OOPs.Pillers.Interfaces;
 
-public class Car implements Engine, Brake, Media{
+public class Car implements Engine, Brake{
+
+    int a = 30;
+
     @Override
     public void brake() {
         System.out.println("normal brake");

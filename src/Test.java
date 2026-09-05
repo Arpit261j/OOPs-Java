@@ -13,6 +13,13 @@ public class Test {
         return new int[] {-1,-1};
     }
 
+    public void Pass(int[] nums) {
+        int[] arr = {10, 20, 30};
+        for (int i = 0; i < arr.length; i++) {
+            nums[i] = arr[i];
+        }
+    }
+
     public static void main(String[] args) {
 //        Given calendars of multiple employees:
 //        A : [9-10], [13-14]Test
@@ -22,12 +29,14 @@ public class Test {
 //        Find a free slot of 30 minutes for everyone.
 
         Test test = new Test();
-        System.out.println(Arrays.toString(test.twoSum(new int[]{3,5,9,10}, 19)));
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("A");
-        sb.append("B");
-        sb.reverse();
+//        System.out.println(Arrays.toString(test.twoSum(new int[]{3,5,9,10}, 19)));
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("A");
+//        sb.append("B");
+//        sb.reverse();
+        int[] nums = new int[] {1,2,3,4};
+        test.Pass(nums);
+        System.out.println(Arrays.toString(nums));
 
     }
 }

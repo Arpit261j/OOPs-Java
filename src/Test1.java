@@ -127,26 +127,118 @@ public class Test1 {
 //        return list;
 //    }
 
+//    public List<List<Integer>> threeSum(int[] nums) {
+//        Arrays.sort(nums);
+//        HashSet<List<Integer>> set = new HashSet();
+//        List<List<Integer>> list = new ArrayList<>();
+//        for(int i = 0; i < nums.length; i++) {
+//            int j = i+1, k = nums.length-1;
+//            while(j < k) {
+//                int sum = nums[i] + nums[j] + nums[k];
+//                if(sum == 0) {
+//                    if(!set.contains(Arrays.asList(nums[i], nums[j], nums[k]))) {
+//                        set.add(Arrays.asList(nums[i], nums[j], nums[k]));
+//                        list.add(Arrays.asList(nums[i], nums[j], nums[k]));
+//                    }
+//                    j++;
+//                }
+//                else if (sum > 0)   k--;
+//                else j++;
+//            }
+//        }
+//        return list;
+//    }
+
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
-        HashSet<List<Integer>> set = new HashSet();
-        List<List<Integer>> list = new ArrayList<>();
-        for(int i = 0; i < nums.length; i++) {
+        List<List<Integer>> ans = new ArrayList();
+        for(int i = 0; i < nums.length-2; i++) {
+            if(i > 0  && nums[i] == nums[i-1])  continue; //while???????
             int j = i+1, k = nums.length-1;
             while(j < k) {
                 int sum = nums[i] + nums[j] + nums[k];
                 if(sum == 0) {
-                    if(!set.contains(Arrays.asList(nums[i], nums[j], nums[k]))) {
-                        set.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                        list.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    }
+                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    k--;
+
+                    while(j < k && nums[j] == nums[j-1])    j++;
+                    while(j < k && nums[k] == nums[k+1])    k--;
+                }
+                else if(sum < 0) {
                     j++;
                 }
-                else if (sum > 0)   k--;
-                else j++;
+                else {
+                    k--;
+                }
             }
         }
-        return list;
+        return ans;
+    }
+
+//    public int lengthOfLongestSubstring(String s) {
+//        int index = 0, maxCount = 0;
+//        for(int j = 1; j < s.length(); j++) {
+//            int i = index, count = 1;
+//            while(i < j) {
+//                if(s.charAt(i) == s.charAt(j)) {
+//                    index = i+1;
+//                    maxCount = Math.max(maxCount, count);
+//                    break;
+//                }
+//                count++;
+//                maxCount = Math.max(maxCount, count);
+//                i++;
+//            }
+//        }
+//        return maxCount;
+//    }
+
+//    public int lengthOfLongestSubstring(String s) {
+//        if(s.length() == 0 || s.length() == 1)    return s.length();
+//        HashMap<Character, Integer> map = new HashMap();
+//        int maxCount = 0, count = 0, j = 0, i = 0 ;
+//        while(j < s.length()) {
+//            if(!map.containsKey(s.charAt(j))) {
+//                map.put(s.charAt(j), j);
+//                count++;
+//                j++;
+//                maxCount = Math.max(count, maxCount);
+//            }
+//            else {
+//                int idx = map.get(s.charAt(j));
+//                while (i <= idx) {
+//                    map.remove(s.charAt(i));
+//                    i++;
+//                    count--;
+//                }
+//            }
+//        }
+//        return maxCount;
+//    }
+
+    public int lengthOfLongestSubstring(String s) {
+        int maxLen = Integer.MIN_VALUE, count = 0;
+        HashMap<Character, Integer> map = new HashMap();
+        int l = 0, r = 0;
+        while(r < s.length()) {
+            if(!map.containsKey(s.charAt(r))) {
+                count++;
+            }
+            else {
+                if(map.get(s.charAt(r)) < l) {
+                    count++;
+                }
+                else {
+                    l = map.get(s.charAt(r)) + 1;
+                    count = r - l +1;
+                }
+            }
+            map.put(s.charAt(r), r);
+            maxLen = Math.max(count, maxLen);
+            r++;
+        }
+        return maxLen;
     }
 
     public static void main(String[] args) {
@@ -161,7 +253,8 @@ public class Test1 {
 //        s.split(" ");
 //        System.out.println(s);
 //        System.out.println(" " + 0);
-        System.out.println(test1.threeSum(new int[] {-1,0,1,2,-1,-4}));
+//        System.out.println(test1.threeSum(new int[] {-1,0,1,2,-1,-4}));
+        System.out.println(test1.lengthOfLongestSubstring("abcdecbde"));
     }
 }
 

@@ -241,6 +241,44 @@ public class Test1 {
         return maxLen;
     }
 
+    public int minSubArrayLen(int target, int[] nums) {
+        int len = Integer.MAX_VALUE, sum = 0;
+        int l = 0, r = 0;
+        while(r <= nums.length-1) {
+            sum+= nums[r];
+            r++;
+            while(sum >= target) {
+                len = Math.min(len, r - l);
+                sum-= nums[l];
+                l++;
+            }
+        }
+        return len == Integer.MAX_VALUE ? 0 : len;
+    }
+
+    public boolean checkInclusion(String s1, String s2) {
+//        if(s1.length() < s2.length()) {
+//            String temp = s1;
+//            s1 = s2;
+//            s2 = temp;
+//        }
+        char[] char1 = s1.toCharArray();
+        char[] char2 = s2.toCharArray();
+        Arrays.sort(char1);
+        Arrays.sort(char2);
+        int i = 0, j = 0;
+        while(j < char2.length && char1[i] != char2[j]) j++;
+        while(j < char2.length-1 && i < char1.length-1) {
+            if(char1[++i] == char2[++j]) {
+                continue;
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Test1 test1 = new Test1();
 //        System.out.println(test1.maxProfit(new int[]{7,6,4,21,12,15,19,1}));
@@ -254,7 +292,8 @@ public class Test1 {
 //        System.out.println(s);
 //        System.out.println(" " + 0);
 //        System.out.println(test1.threeSum(new int[] {-1,0,1,2,-1,-4}));
-        System.out.println(test1.lengthOfLongestSubstring("abcdecbde"));
+//        System.out.println(test1.minSubArrayLen(11, new int[] {1,2,3,4,5}));
+        System.out.println(test1.checkInclusion("ab","eidbaooo"));
     }
 }
 

@@ -330,6 +330,24 @@ public class Test1 {
         return maxLen;
     }
 
+    public int totalFruit(int[] arr) {
+        int l = 0, maxLen = 0;
+        HashMap<Integer,Integer> map = new HashMap();
+        for(int r = 0; r < arr.length; r++) {
+            map.put(arr[r], map.getOrDefault(arr[r],0) + 1);
+            while(map.size() > 2) {
+                map.put(arr[l], map.get(arr[l])-1);
+                l++;
+
+                if(map.get(arr[l-1]) == 0) {
+                    map.remove(arr[l-1]);
+                }
+            }
+            maxLen = Math.max(maxLen, r-l+1);
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
         Test1 test1 = new Test1();
 //        System.out.println(test1.maxProfit(new int[]{7,6,4,21,12,15,19,1}));
@@ -345,7 +363,8 @@ public class Test1 {
 //        System.out.println(test1.threeSum(new int[] {-1,0,1,2,-1,-4}));
 //        System.out.println(test1.minSubArrayLen(11, new int[] {1,2,3,4,5}));
 //        System.out.println(test1.checkInclusion("ab","eidbaooo"));
-        System.out.println(test1.lengthOfLongestSubstring("abcabcbb"));
+//        System.out.println(test1.lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(test1.totalFruit(new int[] {1,2,3,2,2}));
     }
 }
 

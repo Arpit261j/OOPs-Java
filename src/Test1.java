@@ -217,28 +217,43 @@ public class Test1 {
 //        return maxCount;
 //    }
 
+//    public int lengthOfLongestSubstring(String s) {
+//        int maxLen = Integer.MIN_VALUE, count = 0;
+//        HashMap<Character, Integer> map = new HashMap();
+//        int l = 0, r = 0;
+//        while(r < s.length()) {
+//            if(!map.containsKey(s.charAt(r))) {
+//                count++;
+//            }
+//            else {
+//                if(map.get(s.charAt(r)) < l) {
+//                    count++;
+//                }
+//                else {
+//                    l = map.get(s.charAt(r)) + 1;
+//                    count = r - l +1;
+//                }
+//            }
+//            map.put(s.charAt(r), r);
+//            maxLen = Math.max(count, maxLen);
+//            r++;
+//        }
+//        return maxLen;
+//    }
+
     public int lengthOfLongestSubstring(String s) {
-        int maxLen = Integer.MIN_VALUE, count = 0;
+        if(s.length() == 0)   return 0;
         HashMap<Character, Integer> map = new HashMap();
-        int l = 0, r = 0;
+        int l = 0, r = 0, len = Integer.MIN_VALUE;
         while(r < s.length()) {
-            if(!map.containsKey(s.charAt(r))) {
-                count++;
+            if(map.containsKey(s.charAt(r)) && map.get(s.charAt(r)) >= l) {
+                l = map.get(s.charAt(r))+1;
             }
-            else {
-                if(map.get(s.charAt(r)) < l) {
-                    count++;
-                }
-                else {
-                    l = map.get(s.charAt(r)) + 1;
-                    count = r - l +1;
-                }
-            }
-            map.put(s.charAt(r), r);
-            maxLen = Math.max(count, maxLen);
+            map.put(s.charAt(r),r);
+            len = Math.max(len, r-l+1);
             r++;
         }
-        return maxLen;
+        return len;
     }
 
     public int minSubArrayLen(int target, int[] nums) {
@@ -279,6 +294,42 @@ public class Test1 {
         return true;
     }
 
+    public int longestOnes(int[] nums, int k) {
+        int l = 0, r = 0, idx1 = 0, idx2 = 0, maxLen = Integer.MIN_VALUE;
+        while(l < nums.length && nums[l] != 0) {
+            l++;
+            r++;
+        }
+        idx1 = l;
+        int countZero = 0;
+        while(r < nums.length && countZero < k) {
+            if(nums[r] == 0) {
+                countZero++;
+            }
+            r++;
+        }
+        r--;
+        while(r < nums.length) {
+            idx2 = r+1;
+            while(idx2 < nums.length && nums[idx2] != 0) {
+                idx2++;
+            }
+            if(l == idx1)   {
+                maxLen = Math.max(maxLen, idx2);
+            }
+            else {
+                maxLen = Math.max(maxLen, idx2 - idx1 -1);
+            }
+            idx1 = l;
+            l++;
+            while(l < nums.length && nums[l] != 0) {
+                l++;
+            }
+            r = idx2;
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
         Test1 test1 = new Test1();
 //        System.out.println(test1.maxProfit(new int[]{7,6,4,21,12,15,19,1}));
@@ -293,7 +344,8 @@ public class Test1 {
 //        System.out.println(" " + 0);
 //        System.out.println(test1.threeSum(new int[] {-1,0,1,2,-1,-4}));
 //        System.out.println(test1.minSubArrayLen(11, new int[] {1,2,3,4,5}));
-        System.out.println(test1.checkInclusion("ab","eidbaooo"));
+//        System.out.println(test1.checkInclusion("ab","eidbaooo"));
+        System.out.println(test1.lengthOfLongestSubstring("abcabcbb"));
     }
 }
 

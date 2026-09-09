@@ -348,6 +348,41 @@ public class Test1 {
         return maxLen;
     }
 
+    public int trap(int[] height) {
+        int[] leftMax = new int[height.length];
+        int[] rightMax = new int[height.length];
+        leftMax[0] = height[0];
+        rightMax[height.length-1] = height[height.length-1];
+        int trappedWater = 0;
+        for(int i = 1; i < height.length; i++) {
+            leftMax[i] = Math.max(height[i], leftMax[i-1]);
+        }
+        for(int i = height.length-2; i >= 0; i--) {
+            rightMax[i] = Math.max(height[i], rightMax[i+1]);
+        }
+        for(int i = 1; i < height.length-1; i++) {
+            trappedWater += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return trappedWater;
+    }
+
+    public int characterReplacement(String s, int k) {
+        int maxLen= 0, maxFreq = 0, l = 0;
+        HashMap<Character, Integer> map = new HashMap();
+        for(int r = 0; r < s.length(); r++) {
+            map.put(s.charAt(r), map.getOrDefault(s.charAt(r), 0) + 1);
+            maxFreq = Math.max(maxFreq, map.get(s.charAt(r)));
+
+            while((l <= r) && (r-l+1 - maxFreq > k)) {
+                map.put(s.charAt(l), map.get(s.charAt(l))-1);
+                l++;
+                maxFreq = Collections.max(map.values());
+            }
+            maxLen = Math.max(r-l+1, maxLen);
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
         Test1 test1 = new Test1();
 //        System.out.println(test1.maxProfit(new int[]{7,6,4,21,12,15,19,1}));
@@ -364,7 +399,9 @@ public class Test1 {
 //        System.out.println(test1.minSubArrayLen(11, new int[] {1,2,3,4,5}));
 //        System.out.println(test1.checkInclusion("ab","eidbaooo"));
 //        System.out.println(test1.lengthOfLongestSubstring("abcabcbb"));
-        System.out.println(test1.totalFruit(new int[] {1,2,3,2,2}));
+//        System.out.println(test1.totalFruit(new int[] {1,2,3,2,2}));
+//        System.out.println(test1.trap(new int[] {0,1,0,2,1,0,1,3,2,1,2,1}));
+        System.out.println(test1.characterReplacement("ABAB", 2));
     }
 }
 

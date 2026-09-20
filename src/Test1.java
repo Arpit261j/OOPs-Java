@@ -256,20 +256,20 @@ public class Test1 {
         return len;
     }
 
-    public int minSubArrayLen(int target, int[] nums) {
-        int len = Integer.MAX_VALUE, sum = 0;
-        int l = 0, r = 0;
-        while(r <= nums.length-1) {
-            sum+= nums[r];
-            r++;
-            while(sum >= target) {
-                len = Math.min(len, r - l);
-                sum-= nums[l];
-                l++;
-            }
-        }
-        return len == Integer.MAX_VALUE ? 0 : len;
-    }
+//    public int minSubArrayLen(int target, int[] nums) {
+//        int len = Integer.MAX_VALUE, sum = 0;
+//        int l = 0, r = 0;
+//        while(r <= nums.length-1) {
+//            sum+= nums[r];
+//            r++;
+//            while(sum >= target) {
+//                len = Math.min(len, r - l);
+//                sum-= nums[l];
+//                l++;
+//            }
+//        }
+//        return len == Integer.MAX_VALUE ? 0 : len;
+//    }
 
     public boolean checkInclusion(String s1, String s2) {
 //        if(s1.length() < s2.length()) {
@@ -366,22 +366,22 @@ public class Test1 {
         return trappedWater;
     }
 
-    public int characterReplacement(String s, int k) {
-        int maxLen= 0, maxFreq = 0, l = 0;
-        HashMap<Character, Integer> map = new HashMap();
-        for(int r = 0; r < s.length(); r++) {
-            map.put(s.charAt(r), map.getOrDefault(s.charAt(r), 0) + 1);
-            maxFreq = Math.max(maxFreq, map.get(s.charAt(r)));
-
-            while((l <= r) && (r-l+1 - maxFreq > k)) {
-                map.put(s.charAt(l), map.get(s.charAt(l))-1);
-                l++;
-                maxFreq = Collections.max(map.values());
-            }
-            maxLen = Math.max(r-l+1, maxLen);
-        }
-        return maxLen;
-    }
+//    public int characterReplacement(String s, int k) {
+//        int maxLen= 0, maxFreq = 0, l = 0;
+//        HashMap<Character, Integer> map = new HashMap();
+//        for(int r = 0; r < s.length(); r++) {
+//            map.put(s.charAt(r), map.getOrDefault(s.charAt(r), 0) + 1);
+//            maxFreq = Math.max(maxFreq, map.get(s.charAt(r)));
+//
+//            while((l <= r) && (r-l+1 - maxFreq > k)) {
+//                map.put(s.charAt(l), map.get(s.charAt(l))-1);
+//                l++;
+//                maxFreq = Collections.max(map.values());
+//            }
+//            maxLen = Math.max(r-l+1, maxLen);
+//        }
+//        return maxLen;
+//    }
 
 //    public int subarraySum(int[] nums, int k) {
 //        int count = 0, pSum = 0;
@@ -568,6 +568,34 @@ public class Test1 {
         return count;
     }
 
+    public int characterReplacement(String s, int k) {
+        int l = 0, max = 0;
+        HashMap<Character, Integer> map = new HashMap();
+        int maxF = 0;
+        for(int r = 0; r < s.length(); r++) {
+            map.put(s.charAt(r), map.getOrDefault(s.charAt(r),0)+1);
+            maxF= Math.max(maxF, map.get(s.charAt(r)));
+            while(r-l+1-maxF > k) {
+                map.put(s.charAt(l), map.get(s.charAt(l))-1);
+                l++;
+            }
+            max = Math.max(max, r-l+1);
+        }
+        return max;
+    }
+
+    public int minSubArrayLen(int target, int[] nums) {
+        int l = 0, min = Integer.MAX_VALUE, sum = 0;
+        for(int r = 0; r < nums.length; r++) {
+            sum+= nums[r];
+            while(sum >= target) {
+                min = Math.min(min, r-l+1);
+                sum-= nums[l];
+                l++;
+            }
+        }
+        return min == Integer.MAX_VALUE ? 0 : min;
+    }
 
 
     public static void main(String[] args) {
@@ -596,7 +624,9 @@ public class Test1 {
 //        System.out.println(test1.longestConsecutive(new int[]{100,4,1,3,2}));
 //        System.out.println(test1.longestSubarray(new int[]{0,1,1,1,0,1,1,0,1}));
 //        System.out.println(test1.subarraySum(new int[]{1,2,3,-3,4,2}, 6));
-        System.out.println(test1.threeSum(new int[]{-100,-70,-60,110,120,130,160}));
+//        System.out.println(test1.threeSum(new int[]{-100,-70,-60,110,120,130,160}));
+//        System.out.println(test1.characterReplacement("AABABBA",1));
+        System.out.println(test1.minSubArrayLen(11,new int[]{1,2,3,4,5}));
     }
 }
 
